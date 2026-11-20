@@ -118,6 +118,7 @@ td:first-child{min-width:150px}
     <div><label for="p2">Type it again</label><input id="p2" type="password" autocomplete="new-password"></div>
     <button class="btn btn-red" type="submit">Save password</button>
     <p class="err" id="perr" role="alert"></p>
+    <button class="btn btn-ghost" type="button" id="pback">Back to login</button>
   </form>
 </div>
 
@@ -211,10 +212,20 @@ const nice=e=>{const m=(e&&e.message)||String(e);return /no_double_booking|exclu
 
 if(!CFG.supabaseUrl||!CFG.supabaseAnonKey||!window.supabase){$('setup').hidden=false}
 else{
-const linkType=new URLSearchParams(location.hash.slice(1)).get('type')||new URLSearchParams(location.search).get('type');
-const sb=window.supabase.createClient(CFG.supabaseUrl,CFG.supabaseAnonKey,{auth:{persistSession:true,detectSessionInUrl:true}});
-let needPw=linkType==='invite'||linkType==='recovery';
-sb.auth.onAuthStateChange(ev=>{if(ev==='PASSWORD_RECOVERY'){needPw=true;boot()}});
+// read invite / reset links ourselves, so we can show a clear message if they fail
+const hp=new URLSearchParams(location.hash.slice(1)),qp=new URLSearchParams(location.search);
+const linkType=hp.get('type')||qp.get('type');
+const linkErr=hp.get('error_description')||qp.get('error_description');
+const linkTokens=hp.get('access_token')&&hp.get('refresh_token')?{access_token:hp.get('access_token'),refresh_token:hp.get('refresh_token')}:null;
+const linkCode=qp.get('code');
+if(location.hash||linkCode)history.replaceState(null,'',location.pathname);
+const sb=window.supabase.createClient(CFG.supabaseUrl,CFG.supabaseAnonKey,{auth:{persistSession:true,detectSessionInUrl:false,flowType:'implicit'}});
+let needPw=linkType==='invite'||linkType==='recovery'||linkType==='signup';
+const consumeLink=async()=>{
+  if(linkErr){$('lerr').textContent=/expired|invalid/i.test(linkErr)?'That link has expired or was already used. Type your email below and tap "Forgot password?" for a new one.':linkErr;return}
+  if(linkTokens){const{error}=await sb.auth.setSession(linkTokens);if(error){$('lerr').textContent='That link did not work ('+error.message+'). Type your email and tap "Forgot password?" for a new one.';needPw=false}}
+  else if(linkCode){const{error}=await sb.auth.exchangeCodeForSession(linkCode);if(error){$('lerr').textContent='That link did not work. Type your email and tap "Forgot password?" for a new one.';needPw=false}else needPw=true}
+};
 let day=todayStr(),services=[],hours={},timer=null;
 
 // ---------- auth ----------
@@ -240,10 +251,15 @@ $('pf').onsubmit=async e=>{
   const a=$('p1').value,b=$('p2').value;
   if(a.length<8){$('perr').textContent='Use at least 8 characters.';return}
   if(a!==b){$('perr').textContent='The two passwords are not the same.';return}
+  const{data:{session}}=await sb.auth.getSession();
+  if(!session){$('perr').textContent='Your link has expired. Go back to the login, type your email and tap "Forgot password?" for a new link.';return}
+  const btn=e.submitter||$('pf').querySelector('button');btn.disabled=true;
   const{error}=await sb.auth.updateUser({password:a});
-  if(error){$('perr').textContent=error.message;return}
+  btn.disabled=false;
+  if(error){$('perr').textContent=/session/i.test(error.message)?'Your link has expired. Go back to the login, type your email and tap "Forgot password?" for a new link.':error.message;return}
   needPw=false;history.replaceState(null,'',location.pathname);boot();
 };
+$('pback').onclick=async()=>{await sb.auth.signOut();location.reload()};
 $('forgot').onclick=async()=>{
   const email=$('le').value.trim();
   if(!email){$('lerr').textContent='Type your email first, then tap Forgot password.';return}
@@ -428,7 +444,7 @@ document.querySelector('.tabs').onclick=e=>{const b=e.target.closest('button');i
   document.querySelectorAll('.tabs button').forEach(x=>x.classList.toggle('on',x===b));
   ['agenda','services','hours'].forEach(v=>$('v-'+v).hidden=v!==b.dataset.v);if(b.dataset.v==='hours')loadSync();window.scrollTo(0,0)};
 
-boot();
+consumeLink().then(boot);
 }
 }
 </script>
