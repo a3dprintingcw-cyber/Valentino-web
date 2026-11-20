@@ -104,7 +104,20 @@ td:first-child{min-width:150px}
     <div><label for="le">Email</label><input id="le" type="email" autocomplete="username" required></div>
     <div><label for="lp">Password</label><input id="lp" type="password" autocomplete="current-password" required></div>
     <button class="btn btn-red" type="submit">Log in</button>
+    <button class="btn btn-ghost" type="button" id="forgot">Forgot password?</button>
     <p class="err" id="lerr" role="alert"></p>
+  </form>
+</div>
+
+<div id="setpw" class="login" hidden>
+  <form id="pf" novalidate>
+    <img src="logo.png" alt="Valentino The Barbershop">
+    <h2 style="font-size:24px">Choose your password</h2>
+    <p class="muted" style="margin:0">You'll use this with your email to open your agenda.</p>
+    <div><label for="p1">New password (at least 8 characters)</label><input id="p1" type="password" autocomplete="new-password" minlength="8"></div>
+    <div><label for="p2">Type it again</label><input id="p2" type="password" autocomplete="new-password"></div>
+    <button class="btn btn-red" type="submit">Save password</button>
+    <p class="err" id="perr" role="alert"></p>
   </form>
 </div>
 
@@ -198,13 +211,18 @@ const nice=e=>{const m=(e&&e.message)||String(e);return /no_double_booking|exclu
 
 if(!CFG.supabaseUrl||!CFG.supabaseAnonKey||!window.supabase){$('setup').hidden=false}
 else{
-const sb=window.supabase.createClient(CFG.supabaseUrl,CFG.supabaseAnonKey,{auth:{persistSession:true}});
+const linkType=new URLSearchParams(location.hash.slice(1)).get('type')||new URLSearchParams(location.search).get('type');
+const sb=window.supabase.createClient(CFG.supabaseUrl,CFG.supabaseAnonKey,{auth:{persistSession:true,detectSessionInUrl:true}});
+let needPw=linkType==='invite'||linkType==='recovery';
+sb.auth.onAuthStateChange(ev=>{if(ev==='PASSWORD_RECOVERY'){needPw=true;boot()}});
 let day=todayStr(),services=[],hours={},timer=null;
 
 // ---------- auth ----------
 const boot=async()=>{
   const{data:{session}}=await sb.auth.getSession();
-  if(!session){$('login').hidden=false;$('app').hidden=true;return}
+  if(!session){$('login').hidden=false;$('app').hidden=true;$('setpw').hidden=true;return}
+  if(needPw){$('login').hidden=true;$('app').hidden=true;$('setpw').hidden=false;return}
+  $('setpw').hidden=true;
   const{data:adm}=await sb.from('admins').select('user_id').eq('user_id',session.user.id).maybeSingle();
   if(!adm){$('login').hidden=false;$('app').hidden=true;$('lerr').textContent='This account is not set up as admin.';await sb.auth.signOut();return}
   $('login').hidden=true;$('app').hidden=false;
@@ -216,6 +234,21 @@ $('lf').onsubmit=async e=>{
   const{error}=await sb.auth.signInWithPassword({email:$('le').value.trim(),password:$('lp').value});
   if(error){$('lerr').textContent='Wrong email or password.';return}
   boot();
+};
+$('pf').onsubmit=async e=>{
+  e.preventDefault();$('perr').textContent='';
+  const a=$('p1').value,b=$('p2').value;
+  if(a.length<8){$('perr').textContent='Use at least 8 characters.';return}
+  if(a!==b){$('perr').textContent='The two passwords are not the same.';return}
+  const{error}=await sb.auth.updateUser({password:a});
+  if(error){$('perr').textContent=error.message;return}
+  needPw=false;history.replaceState(null,'',location.pathname);boot();
+};
+$('forgot').onclick=async()=>{
+  const email=$('le').value.trim();
+  if(!email){$('lerr').textContent='Type your email first, then tap Forgot password.';return}
+  const{error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});
+  $('lerr').textContent=error?error.message:'Check your email for a link to set a new password.';
 };
 $('logout').onclick=async()=>{await sb.auth.signOut();location.reload()};
 
