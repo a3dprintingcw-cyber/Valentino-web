@@ -241,7 +241,7 @@ grant execute on function public.cancel_booking(uuid) to anon, authenticated;
 -- ---------- starting data (from his Fresha menu) ----------
 
 insert into public.services (id, name, description, category, minutes, price, sort) values
-  ('adult',       'Adult haircut',             'Cut and style, no beard', 'Haircuts',          30, 25, 1),
+  ('adult',       'Adult haircut',             'Cut and style, no beard', 'Haircuts',          30, 30, 1),
   ('cutbeard',    'Haircut and beard',         'Includes beard oil',      'Haircuts',          30, 30, 2),
   ('kids',        'Kids haircut',              'Under 15 years',          'Kids',              30, 20, 3),
   ('teens',       'Kids 15+',                  '15 years and up',         'Kids',              30, 25, 4),
