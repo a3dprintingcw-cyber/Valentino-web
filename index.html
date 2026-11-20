@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Valentino The Barber</title>
+<meta name="description" content="Valentino The Barber, Franklin D. Rooseveltweg 307N (Dupont), Curaçao. Fades, beards, kids cuts and house calls. Book online.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,600;6..96,700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE: confident neighbourhood barber, short lines, no fluff
+   IDEA: the shop window: black glass, his logo lettering, a turning barber pole
+   PICTURE: a large barber pole with a straight razor, stripes slowly turning
+   COLOUR and TYPE: his logo: black, gold gradient, a red swoosh; Bodoni Moda to match the logo, Barlow for text
+   LAYOUT: hero, services price board with a booking tray, house call request, hours and map, footer */
+:root{color-scheme:dark;--bg:#0c0c0c;--panel:#161616;--line:#2a2a2a;--ink:#f4f1ea;--mute:#a9a49a;--red:#c8202a;--gold:#c9a25a;--gold2:#e2c487}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 Barlow,system-ui,sans-serif;overflow-x:clip}
+a{color:inherit}
+h1,h2,h3,.disp{font-family:'Bodoni Moda',Didot,Georgia,serif;font-weight:600;line-height:1.05;margin:0;text-wrap:balance}
+h2{font-size:clamp(32px,5vw,48px);background:linear-gradient(180deg,#f3dc9c,#c9a25a 55%,#8a6a2e);-webkit-background-clip:text;background-clip:text;color:transparent;width:fit-content}
+.band{padding:clamp(40px,6vw,88px) max(5vw,16px)}
+.wrap{max-width:1240px;margin:0 auto}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 22px;border-radius:999px;font:600 16px Barlow,sans-serif;text-decoration:none;border:1.5px solid transparent;cursor:pointer;white-space:nowrap}
+.btn-red{background:var(--red);color:#fff}.btn-red:hover{background:#a8151f}
+.btn-ghost{border-color:var(--gold);color:var(--gold2);background:transparent}.btn-ghost:hover{background:rgba(201,162,90,.12)}
+.btn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
+.rule{height:3px;background:var(--red);border:0;margin:14px 0}
+.gold{color:var(--gold)}
+/* nav */
+nav{position:sticky;top:0;z-index:20;background:rgba(12,12,12,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;gap:20px;padding:10px max(5vw,16px);flex-wrap:wrap}
+.mark{text-decoration:none;display:flex;flex-direction:column;line-height:1}
+.mark b{font:700 22px 'Bodoni Moda',Didot,Georgia,serif;letter-spacing:.02em}
+.mark span{font:600 10px 'Bodoni Moda',Didot,Georgia,serif;color:var(--gold);letter-spacing:.3em;border-top:2px solid var(--red);padding-top:3px;margin-top:3px}
+.links{display:flex;gap:18px;margin-left:auto;flex-wrap:wrap}
+.links a{text-decoration:none;color:var(--mute);font-weight:500}.links a:hover{color:var(--ink)}
+@media(max-width:700px){.links{display:none}.navbook{margin-left:auto}}
+/* hero */
+.hero{background:radial-gradient(120% 90% at 80% 20%,#1d1b18 0%,#0c0c0c 60%)}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(24px,4vw,64px);align-items:center}
+.logo-big img{display:block;width:100%;max-width:620px;height:auto}
+.logo-big .v{font:700 clamp(64px,11vw,140px)/.9 'Bodoni Moda',Didot,Georgia,serif;letter-spacing:.01em}
+.logo-big .tb{font:600 clamp(18px,2.6vw,30px) 'Bodoni Moda',Didot,Georgia,serif;letter-spacing:.32em;color:var(--gold)}
+.logo-big .rule{height:4px;max-width:520px}
+.tag{font-size:clamp(18px,2vw,22px);color:var(--mute);margin:22px 0 28px;max-width:34ch}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.status{display:inline-flex;align-items:center;gap:8px;margin-top:22px;font-size:15px;color:var(--mute)}
+.dot{width:10px;height:10px;border-radius:50%;background:#555}.dot.on{background:#3fbf6a;box-shadow:0 0 0 4px rgba(63,191,106,.18)}
+.pole{width:100%;max-height:520px;display:block}
+.stripes{animation:turn 3.2s linear infinite}
+@keyframes turn{to{transform:translateY(-80px)}}
+@media(prefers-reduced-motion:reduce){.stripes{animation:none}html{scroll-behavior:auto}}
+@media(max-width:760px){.hero .wrap{grid-template-columns:1fr}.pole{max-height:300px}.picture{order:-1}}
+/* services */
+.head{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:28px}
+.head p{color:var(--mute);margin:8px 0 0;max-width:52ch}
+.board{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,.6fr);gap:28px;align-items:start}
+@media(max-width:900px){.board{grid-template-columns:1fr}}
+.group{margin-bottom:26px}
+.group h3{font-size:15px;letter-spacing:.08em;color:var(--gold);font-weight:600;margin-bottom:8px}
+.svc{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:14px;align-items:center;padding:14px 4px;border-bottom:1px dashed var(--line);cursor:pointer}
+.svc:hover .nm{color:#fff}
+.svc .nm{font-weight:600;font-size:18px}
+.svc .ds{display:block;color:var(--mute);font-size:14px;font-weight:400}
+.svc .pr{font:600 20px 'Bodoni Moda',Didot,Georgia,serif;white-space:nowrap;text-align:right}
+.add{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--line);background:transparent;color:var(--ink);font-size:22px;cursor:pointer;display:grid;place-items:center}
+.svc.sel .add{background:var(--red);border-color:var(--red)}
+.tray{position:sticky;top:84px;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px}
+.tray h3{font-size:24px;margin-bottom:6px}
+.tray ul{list-style:none;padding:0;margin:14px 0;min-height:40px}
+.tray li{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid var(--line);font-size:15px}
+.tray .empty{color:var(--mute);font-size:15px}
+.tot{display:flex;justify-content:space-between;font:600 20px 'Bodoni Moda',Didot,Georgia,serif;margin:10px 0 16px}
+.tray .btn{width:100%}
+.small{font-size:13px;color:var(--mute);margin:10px 0 0}
+/* house call */
+.hc{background:linear-gradient(180deg,#121110,#0c0c0c);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.hc .wrap{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(24px,4vw,64px)}
+@media(max-width:860px){.hc .wrap{grid-template-columns:1fr}}
+.steps{list-style:none;padding:0;margin:24px 0}
+.steps li{display:grid;grid-template-columns:40px 1fr;gap:12px;margin-bottom:16px;color:var(--mute)}
+.steps b{display:block;color:var(--ink)}
+.steps i{font:600 18px 'Bodoni Moda',Didot,Georgia,serif;font-style:normal;width:36px;height:36px;border-radius:50%;border:1.5px solid var(--gold);color:var(--gold);display:grid;place-items:center}
+.callbox{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;margin-top:8px}
+.callbox .num{font:600 28px 'Bodoni Moda',Didot,Georgia,serif;white-space:nowrap}
+form{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:clamp(18px,3vw,30px);display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.full{grid-column:1/-1}
+@media(max-width:560px){form{grid-template-columns:1fr}}
+label{display:block;font-size:14px;font-weight:600;margin-bottom:6px;color:var(--mute)}
+input,select,textarea{width:100%;min-height:48px;background:#0e0e0e;border:1px solid #333;border-radius:10px;color:var(--ink);font:16px Barlow,sans-serif;padding:10px 12px}
+textarea{min-height:90px;resize:vertical}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{position:relative}
+.chip input{position:absolute;opacity:0;inset:0;min-height:0}
+.chip span{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border:1px solid #333;border-radius:999px;font-size:15px;cursor:pointer}
+.chip input:checked+span{background:var(--gold);border-color:var(--gold);color:#111;font-weight:600}
+.chip input:focus-visible+span{outline:3px solid var(--gold2);outline-offset:2px}
+.err{color:#ff7a7f;font-size:14px;min-height:18px;margin:0}
+.done{display:none;grid-column:1/-1;background:#0e0e0e;border:1px solid var(--gold);border-radius:12px;padding:16px}
+.done pre{white-space:pre-wrap;font:14px/1.5 Barlow,sans-serif;color:var(--mute);margin:10px 0}
+.done .cta{margin-top:8px}
+/* hours */
+.info .wrap{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+@media(max-width:860px){.info .wrap{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:24px}
+.card h3{font-size:26px;margin-bottom:14px}
+.hrs{width:100%;border-collapse:collapse;font-size:16px}
+.hrs td{padding:8px 0;border-bottom:1px solid var(--line)}
+.hrs td:last-child{text-align:right;white-space:nowrap}
+.hrs tr.today td{color:var(--gold2);font-weight:600}
+.hrs .off{color:var(--mute)}
+.card p{margin:0 0 12px;color:var(--mute)}
+.card .btn{margin-top:6px}
+.ig{display:flex;flex-direction:column;gap:10px}
+.ig a{display:flex;justify-content:space-between;gap:10px;align-items:center;min-height:48px;padding:0 16px;border:1px solid var(--line);border-radius:12px;text-decoration:none}
+.ig a:hover{border-color:var(--gold)}
+.ig small{color:var(--mute)}
+footer{padding:28px max(5vw,16px);border-top:1px solid var(--line);color:var(--mute);font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="mark" href="#top" aria-label="Valentino The Barbershop, home"><img src="logo.png" alt="Valentino The Barbershop" height="40" style="height:40px;width:auto"></a>
+  <div class="links"><a href="#services">Services</a><a href="#house-calls">House calls</a><a href="#visit">Hours and location</a></div>
+  <a class="btn btn-red navbook" href="#services">Book now</a>
+</div></nav>
+
+<header class="band hero" id="top"><div class="wrap">
+  <div>
+    <h1 class="logo-big"><img src="logo.png" alt="Valentino The Barbershop" width="898" height="379"></h1>
+    <p class="tag">Creating confidence one fade at a time. Fresh fades, sharp beards and kids cuts in Dupont, Curaçao, or at your door.</p>
+    <div class="cta">
+      <a class="btn btn-red" href="#services">Book in the shop</a>
+      <a class="btn btn-ghost" href="#house-calls">Request a house call</a>
+    </div>
+    <div class="status"><span class="dot" id="dot"></span><span id="status">Tuesday to Saturday</span></div>
+  </div>
+  <div class="picture" aria-hidden="true">
+    <svg class="pole" viewBox="0 0 320 520">
+      <defs>
+        <clipPath id="glass"><rect x="110" y="96" width="100" height="328" rx="10"/></clipPath>
+        <pattern id="st" width="100" height="80" patternUnits="userSpaceOnUse" patternTransform="skewY(-30)">
+          <rect width="100" height="80" fill="#f4f1ea"/><rect y="0" width="100" height="22" fill="#c8202a"/><rect y="40" width="100" height="14" fill="#1f3c8a"/>
+        </pattern>
+        <linearGradient id="shine" x1="0" x2="1"><stop offset="0" stop-color="#000" stop-opacity=".45"/><stop offset=".3" stop-color="#fff" stop-opacity=".35"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".55"/></linearGradient>
+        <linearGradient id="brass" x1="0" x2="1"><stop offset="0" stop-color="#7d5f2b"/><stop offset=".35" stop-color="#e2c487"/><stop offset=".6" stop-color="#c9a25a"/><stop offset="1" stop-color="#5e4520"/></linearGradient>
+        <linearGradient id="blade" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#e9e9e9"/><stop offset="1" stop-color="#8d8d8d"/></linearGradient>
+      </defs>
+      <ellipse cx="160" cy="500" rx="120" ry="12" fill="#000" opacity=".6"/>
+      <g transform="rotate(-28 160 300)" opacity=".9">
+        <rect x="20" y="282" width="150" height="36" rx="6" fill="#222" stroke="#3a3a3a"/>
+        <circle cx="160" cy="300" r="7" fill="url(#brass)"/>
+        <path d="M160 284 L300 284 Q312 300 300 316 L176 316 Z" fill="url(#blade)"/>
+        <path d="M176 314 L300 314" stroke="#fff" stroke-width="1.5" opacity=".8"/>
+      </g>
+      <rect x="128" y="20" width="64" height="20" rx="4" fill="url(#brass)"/>
+      <path d="M160 0 a24 24 0 0 1 24 24 h-48 a24 24 0 0 1 24 -24z" fill="url(#brass)"/>
+      <rect x="100" y="40" width="120" height="56" rx="10" fill="url(#brass)"/>
+      <g clip-path="url(#glass)"><g class="stripes"><rect x="60" y="40" width="200" height="480" fill="url(#st)"/></g></g>
+      <rect x="110" y="96" width="100" height="328" rx="10" fill="url(#shine)"/>
+      <rect x="100" y="424" width="120" height="44" rx="10" fill="url(#brass)"/>
+      <rect x="128" y="468" width="64" height="18" rx="4" fill="url(#brass)"/>
+      <rect x="112" y="486" width="96" height="10" rx="4" fill="#5e4520"/>
+    </svg>
+  </div>
+</div></header>
+
+<section class="band" id="services"><div class="wrap">
+  <div class="head">
+    <div><h2>Services and prices</h2><p>Pick what you want, then choose your time on Fresha. You get instant confirmation.</p></div>
+  </div>
+  <div class="board">
+    <div id="menu"></div>
+    <aside class="tray">
+      <h3>Your booking</h3>
+      <ul id="picked"><li class="empty">Tap a service to add it.</li></ul>
+      <div class="tot"><span>Total</span><span id="total">Cg. 0</span></div>
+      <a class="btn btn-red" id="go" href="#" rel="noopener">Choose a time on Fresha</a>
+      <p class="small">Prices in Cg. (XCG). Pay in the shop by cash or card.</p>
+    </aside>
+  </div>
+</div></section>
+
+<section class="band hc" id="house-calls"><div class="wrap">
+  <div>
+    <h2>House calls</h2>
+    <hr class="rule" style="max-width:120px">
+    <p style="color:var(--mute);margin:0">Valentino comes to you: at home, at the office, or to get the whole crew ready before an event. House calls are planned personally, so they don't go through the online booking.</p>
+    <ul class="steps">
+      <li><i>1</i><div><b>Send your request</b>Fill in the form with where, when and what you need.</div></li>
+      <li><i>2</i><div><b>Valentino confirms</b>He gets back to you by WhatsApp or phone with the time and price.</div></li>
+      <li><i>3</i><div><b>Get cut at your place</b>He brings everything. You just need a chair and a plug.</div></li>
+    </ul>
+    <div class="callbox">
+      <div style="color:var(--mute);font-size:14px">Rather call? House call line</div>
+      <div class="num" id="hcnum"></div>
+      <div class="cta" style="margin-top:10px"><a class="btn btn-ghost" id="hccall" href="#">Call</a><a class="btn btn-ghost" id="hcwa" href="#" rel="noopener">WhatsApp</a></div>
+    </div>
+  </div>
+  <form id="hcform" novalidate>
+    <div><label for="f-name">Your name</label><input id="f-name" autocomplete="name" required></div>
+    <div><label for="f-phone">Phone or WhatsApp</label><input id="f-phone" type="tel" autocomplete="tel" placeholder="+599 9 ..." required></div>
+    <div class="full"><label for="f-area">Address or area</label><input id="f-area" placeholder="e.g. Jan Thiel, Mahaai, hotel name" required></div>
+    <div><label for="f-date">Preferred day</label><input id="f-date" type="date" required></div>
+    <div><label for="f-time">Preferred time</label>
+      <select id="f-time"><option>Morning</option><option>Afternoon</option><option>Evening</option><option>Flexible</option></select></div>
+    <div class="full"><label>What do you need?</label><div class="chips" id="f-svc"></div></div>
+    <div><label for="f-people">How many people?</label><input id="f-people" type="number" min="1" max="20" value="1" inputmode="numeric"></div>
+    <div><label for="f-occ">Occasion (optional)</label><input id="f-occ" placeholder="Wedding, party, regular cut"></div>
+    <div class="full"><label for="f-notes">Anything else? (optional)</label><textarea id="f-notes" placeholder="Parking, gate code, kids, style references"></textarea></div>
+    <p class="err full" id="f-err" role="alert"></p>
+    <div class="full"><button class="btn btn-red" type="submit" style="width:100%">Send house call request</button></div>
+    <div class="done" id="done">
+      <b>Almost done.</b> Send this message to Valentino on WhatsApp so he can confirm your house call.
+      <pre id="msg"></pre>
+      <div class="cta"><a class="btn btn-red" id="sendwa" href="#" rel="noopener">Open WhatsApp</a><button class="btn btn-ghost" type="button" id="copy">Copy message</button></div>
+    </div>
+  </form>
+</div></section>
+
+<section class="band info" id="visit"><div class="wrap">
+  <div class="card">
+    <h3>Opening hours</h3>
+    <table class="hrs" id="hours"></table>
+    <p class="small">Closed for lunch from 12:00 to 14:00.</p>
+  </div>
+  <div class="card">
+    <h3>The shop</h3>
+    <p>Franklin D. Rooseveltweg 307N<br>Dupont, Willemstad, Curaçao</p>
+    <p>Parking available. Kids welcome.</p>
+    <p>Shop phone: <b style="color:var(--ink);white-space:nowrap">+599 9 672 0190</b></p>
+    <div class="cta">
+      <a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&query=Franklin+D.+Rooseveltweg+307N+Willemstad+Curacao" rel="noopener">Directions</a>
+      <a class="btn btn-ghost" href="tel:+59996720190">Call the shop</a>
+    </div>
+  </div>
+  <div class="card">
+    <h3>See the work</h3>
+    <p>Fresh fades, beards and more on Instagram.</p>
+    <div class="ig">
+      <a href="https://www.instagram.com/valentinotheb.rber/" rel="noopener"><span>@valentinotheb.rber</span><small>The barber</small></a>
+      <a href="https://www.instagram.com/valentino_the_barbershop/" rel="noopener"><span>@valentino_the_barbershop</span><small>The shop</small></a>
+    </div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <span>© <span id="yr"></span> Valentino The Barber, Curaçao</span>
+  <span>Website by A3D Printing</span>
+</div></footer>
+
+<script>
+{
+const FRESHA='https://www.fresha.com/book-now/valentino-barbershop-j4pgmody/all-offer?share=true&pId=2695702';
+const SHOP='+59996720190';
+const HOUSECALL='+59996720190'; // TODO: replace with Valentino's house call number
+const fmt=n=>n.replace(/^\+599(\d)(\d{3})(\d{4})$/,'+599 $1 $2 $3');
+
+const MENU=[
+  {g:'Haircuts',items:[
+    {id:'adult',n:'Adult haircut',d:'Cut and style, no beard',m:30,p:25},
+    {id:'cutbeard',n:'Haircut and beard',d:'Includes beard oil',m:30,p:30}]},
+  {g:'Kids',items:[
+    {id:'kids',n:'Kids haircut',d:'Under 15 years',m:30,p:20},
+    {id:'teens',n:'Kids 15+',d:'15 years and up',m:30,p:25}]},
+  {g:'Shave and details',items:[
+    {id:'lineup',n:'Shave: line up',d:'Haircut not included',m:15,p:10},
+    {id:'lineupbeard',n:'Shave: line up and beard',d:'Haircut not included',m:20,p:16},
+    {id:'brows',n:'Brows fix',d:'Clean up the eyebrows',m:10,p:5}]}
+];
+const all=MENU.flatMap(g=>g.items);
+const picked=new Set();
+const menu=document.getElementById('menu');
+menu.innerHTML=MENU.map(g=>`<div class="group"><h3>${g.g}</h3>${g.items.map(s=>`
+  <div class="svc" data-id="${s.id}" role="button" tabindex="0" aria-pressed="false">
+    <div><span class="nm">${s.n}</span><span class="ds">${s.d} · ${s.m} min</span></div>
+    <div class="pr">Cg. ${s.p}</div>
+    <span class="add" aria-hidden="true">+</span>
+  </div>`).join('')}</div>`).join('');
+
+const renderTray=()=>{
+  const list=all.filter(s=>picked.has(s.id));
+  document.getElementById('picked').innerHTML=list.length?list.map(s=>`<li><span>${s.n}</span><span>Cg. ${s.p}</span></li>`).join(''):'<li class="empty">Tap a service to add it.</li>';
+  const t=list.reduce((a,s)=>a+s.p,0),mins=list.reduce((a,s)=>a+s.m,0);
+  document.getElementById('total').textContent=list.length?`Cg. ${t} · ${mins} min`:'Cg. 0';
+  menu.querySelectorAll('.svc').forEach(el=>{const on=picked.has(el.dataset.id);el.classList.toggle('sel',on);el.setAttribute('aria-pressed',on);el.querySelector('.add').textContent=on?'✓':'+'});
+};
+const toggle=el=>{const id=el.dataset.id;picked.has(id)?picked.delete(id):picked.add(id);renderTray()};
+menu.addEventListener('click',e=>{const el=e.target.closest('.svc');if(el)toggle(el)});
+menu.addEventListener('keydown',e=>{const el=e.target.closest('.svc');if(el&&(e.key==='Enter'||e.key===' ')){e.preventDefault();toggle(el)}});
+document.getElementById('go').href=FRESHA;
+renderTray();
+
+// house call contact
+document.getElementById('hcnum').textContent=fmt(HOUSECALL);
+document.getElementById('hccall').href='tel:'+HOUSECALL;
+const wa=t=>'https://wa.me/'+HOUSECALL.replace(/\D/g,'')+(t?'?text='+encodeURIComponent(t):'');
+document.getElementById('hcwa').href=wa('Hi Valentino, I would like to book a house call.');
+
+// house call form
+const chipBox=document.getElementById('f-svc');
+chipBox.innerHTML=['Haircut','Haircut and beard','Kids haircut','Line up','Beard','Brows'].map((s,i)=>`<label class="chip"><input type="checkbox" value="${s}" ${i===0?'checked':''}><span>${s}</span></label>`).join('');
+const dateIn=document.getElementById('f-date');
+const today=new Date();dateIn.min=today.toISOString().slice(0,10);
+const form=document.getElementById('hcform');
+const v=id=>document.getElementById(id).value.trim();
+form.addEventListener('submit',e=>{
+  e.preventDefault();
+  const err=document.getElementById('f-err');
+  const svcs=[...chipBox.querySelectorAll('input:checked')].map(i=>i.value);
+  if(!v('f-name')||!v('f-phone')||!v('f-area')||!v('f-date')){err.textContent='Please fill in your name, phone, address and preferred day.';return}
+  if(!svcs.length){err.textContent='Pick at least one service.';return}
+  err.textContent='';
+  const d=new Date(v('f-date')+'T12:00').toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'});
+  const lines=[
+    'Hi Valentino, I would like to book a HOUSE CALL.',
+    'Name: '+v('f-name'),
+    'Phone: '+v('f-phone'),
+    'Location: '+v('f-area'),
+    'Day: '+d+' ('+v('f-time')+')',
+    'Services: '+svcs.join(', '),
+    'People: '+(v('f-people')||'1')];
+  if(v('f-occ'))lines.push('Occasion: '+v('f-occ'));
+  if(v('f-notes'))lines.push('Notes: '+v('f-notes'));
+  const text=lines.join('\n');
+  document.getElementById('msg').textContent=text;
+  document.getElementById('sendwa').href=wa(text);
+  const done=document.getElementById('done');done.style.display='block';done.scrollIntoView({block:'nearest'});
+});
+document.getElementById('copy').addEventListener('click',async e=>{
+  try{await navigator.clipboard.writeText(document.getElementById('msg').textContent);e.target.textContent='Copied'}catch(_){e.target.textContent='Select the text above to copy'}
+});
+
+// hours and open status (Curaçao time, UTC-4)
+const DAYS=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const OPEN=[null,null,1,1,1,1,1];
+const cw=new Date(Date.now()+(new Date().getTimezoneOffset()-240)*60000);
+const dow=cw.getDay(),mins=cw.getHours()*60+cw.getMinutes();
+document.getElementById('hours').innerHTML=[2,3,4,5,6,0,1].map(i=>`<tr class="${i===dow?'today':''}"><td>${DAYS[i]}</td><td class="${OPEN[i]?'':'off'}">${OPEN[i]?'9:00 to 12:00 · 14:00 to 18:00':'Closed'}</td></tr>`).join('');
+const isOpen=OPEN[dow]&&((mins>=540&&mins<720)||(mins>=840&&mins<1080));
+let s;
+if(isOpen)s='Open now · until '+(mins<720?'12:00':'18:00');
+else if(OPEN[dow]&&mins>=720&&mins<840)s='Lunch break · back at 14:00';
+else if(OPEN[dow]&&mins<540)s='Opens today at 9:00';
+else{let n=(dow+1)%7;while(!OPEN[n])n=(n+1)%7;s='Closed now · opens '+DAYS[n]+' at 9:00'}
+document.getElementById('status').textContent=s;
+document.getElementById('dot').classList.toggle('on',!!isOpen);
+document.getElementById('yr').textContent=cw.getFullYear();
+}
+</script>
+</body>
+</html>
