@@ -34,6 +34,9 @@ nav{position:sticky;top:0;z-index:20;background:rgba(12,12,12,.92);backdrop-filt
 nav .wrap{display:flex;align-items:center;gap:20px;padding:10px max(5vw,16px);flex-wrap:wrap}
 .mark{text-decoration:none;display:flex;transition:opacity .3s}
 nav.top .mark{opacity:0;pointer-events:none}
+nav{transition:background .3s,border-color .3s}
+nav.top{background:transparent;backdrop-filter:none;border-bottom-color:transparent}
+nav.top+.hero{margin-top:-69px;padding-top:calc(69px + clamp(40px,6vw,88px))}
 .mark b{font:700 22px 'Bodoni Moda',Didot,Georgia,serif;letter-spacing:.02em}
 .mark span{font:600 10px 'Bodoni Moda',Didot,Georgia,serif;color:var(--gold);letter-spacing:.3em;border-top:2px solid var(--red);padding-top:3px;margin-top:3px}
 .links{display:flex;gap:18px;margin-left:auto;flex-wrap:wrap}
@@ -48,8 +51,8 @@ nav.top .mark{opacity:0;pointer-events:none}
 .logo-big img{display:block;width:min(680px,88vw);height:auto;filter:drop-shadow(0 10px 40px rgba(201,162,90,.18))}
 @keyframes rise{to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.logo-big{animation:none;opacity:1;transform:none}html{scroll-behavior:auto}}
-.tag{font-size:clamp(17px,2vw,20px);color:var(--mute);margin:28px auto 30px;max-width:40ch}
-.tag .tl{display:block;font:italic 500 clamp(22px,3vw,30px)/1.2 'Bodoni Moda',Didot,Georgia,serif;color:var(--gold2);margin-bottom:10px}
+.tag{font-size:clamp(17px,2vw,20px);color:var(--mute);margin:28px auto 30px;max-width:40ch;text-wrap:balance}
+.tag .tl{display:block;text-wrap:balance;font:italic 500 clamp(22px,3vw,30px)/1.2 'Bodoni Moda',Didot,Georgia,serif;color:var(--gold2);margin-bottom:10px}
 .cta{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
 .hero .btn{min-height:52px;padding:0 28px}
 .strip{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 26px;margin-top:34px;font-size:14px;color:var(--mute)}
@@ -231,8 +234,6 @@ footer a{color:var(--mute);text-decoration:none}footer a:hover{color:var(--gold2
 @media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}.tk,.logo-wrap::after,.cue::after{animation:none}}
 
 /* photos */
-.hero::before{content:"";position:absolute;inset:0;z-index:0;background:url("https://images.fresha.com/locations/location-profile-images/2695702/5097298/161265dd-46a8-4bca-a737-0ae5c77d0f2c-ValentinoBarbershop-CW-Curaao-Willemstad-Fresha.jpg") center 30%/cover no-repeat;opacity:.38;filter:saturate(.9) contrast(1.05)}
-.hero::after{content:"";position:absolute;inset:0;z-index:0;background:radial-gradient(70% 60% at 50% 42%,rgba(0,0,0,.35),rgba(0,0,0,.85) 75%),linear-gradient(180deg,rgba(0,0,0,.55),rgba(0,0,0,.2) 40%,#0b0b0b)}
 .hero>.wrap,.hero .cue{position:relative;z-index:1}
 .hero .cue{position:absolute}
 .gal .wrap{display:grid;grid-template-columns:1.3fr 1fr;grid-template-rows:repeat(2,minmax(0,1fr));gap:12px;height:clamp(420px,55vw,640px)}
