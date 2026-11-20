@@ -64,6 +64,13 @@ language sql stable security definer set search_path = public as $$
   select exists (select 1 from public.admins where user_id = auth.uid());
 $$;
 
+-- ---------- API access (row level security below decides what each role really sees) ----------
+
+grant usage on schema public to anon, authenticated;
+grant select on public.services, public.hours to anon;
+grant select, insert, update, delete on public.services, public.hours, public.blocks, public.bookings to authenticated;
+grant select on public.admins to authenticated;
+
 -- ---------- row level security ----------
 
 alter table public.services enable row level security;
